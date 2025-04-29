@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <title>4 AND 2 METHOD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --primary: #0ea5e9;
+      --secondary: #22d3ee;
+      --background: #0f172a;
+      --card: #1e293b;
+      --input: #334155;
+      --text: #ffffff;
+    }
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease-in-out;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      font-family: 'Segoe UI', sans-serif;
+      color: var(--text);
+      padding: 20px;
+      margin: 0;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      color: var(--primary);
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px var(--primary);
+      }
+      to {
+        text-shadow: 0 0 20px var(--secondary), 0 0 30px var(--primary);
+      }
+    }
+
+    .input-section, .result-section {
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #1e293b, #334155);
+      border-radius: 15px;
+      box-shadow: 0 0 15px var(--secondary);
+    }
+
+    .input-section h2, .result-section h2 {
+      text-align: center;
+      font-size: 1.3em;
+      margin-bottom: 15px;
+      color: #a5f3fc;
+    }
+
+    .inputs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .inputs input {
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      font-size: 1.4em;
+      border-radius: 12px;
+      border: none;
+      background-color: var(--input);
+      color: white;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px auto;
+    }
+
+    .button {
+      background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+      color: #0f172a;
+      font-size: 1em;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 15px var(--primary);
+    }
+
+    .results {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .result-box {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .result-box div {
+      background: linear-gradient(135deg, #0891b2, #0ea5e9);
+      border-radius: 10px;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3em;
+      color: #0f172a;
+      box-shadow: 0 0 12px #67e8f9;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #cbd5e1;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h1>4 AND 2 මෙතනඩ්</h1>
+
+  <div class="input-section">
+    <h2>අංක ඇතුළත් කරන්න</h2>
+    <div class="inputs">
+      <input type="number" id="A" placeholder="A">
+      <input type="number" id="B" placeholder="B">
+      <input type="number" id="C" placeholder="C">
+      <input type="number" id="D" placeholder="D">
+      <input type="number" id="E" placeholder="E">
+      <input type="number" id="F" placeholder="F">
+    </div>
+  </div>
+
+  <div class="button-group">
+    <button class="button" onclick="calculate()">ගණනය කරන්න</button>
+    <button class="button" onclick="clearInputs()">සියල්ල මකන්න</button>
+  </div>
+
+  <div class="result-section">
+    <h2>පළමු සූත්‍රය</h2>
+    <div class="result-box" id="firstFormulaBox"></div>
+  </div>
+
+  <div class="result-section">
+    <h2>දෙවැනි සූත්‍රය</h2>
+    <div class="result-box" id="secondFormulaBox"></div>
+  </div>
+
+  <footer>DESIGN BY DAMITH LASANTHA</footer>
+
+  <script>
+    function createBoxOutput(containerId, ...values) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      values.forEach(val => {
+        let num = Math.abs(val);
+        if (num >= 10) {
+          num = num % 10; // මුල් අංකය ඉවත් කරන්න
+        }
+        const box = document.createElement('div');
+        box.textContent = num;
+        container.appendChild(box);
+      });
+    }
+
+    function calculate() {
+      const A = parseInt(document.getElementById('A').value) || 0;
+      const B = parseInt(document.getElementById('B').value) || 0;
+      const C = parseInt(document.getElementById('C').value) || 0;
+      const D = parseInt(document.getElementById('D').value) || 0;
+      const E = parseInt(document.getElementById('E').value) || 0;
+      const F = parseInt(document.getElementById('F').value) || 0;
+
+      // පළමු සූත්‍රය
+      const sumFirst4 = A + B + C + D;
+      const result1 = sumFirst4 - 6;
+      const result2 = sumFirst4 - 8;
+      createBoxOutput('firstFormulaBox', result1, result2);
+
+      // දෙවැනි සූත්‍රය
+      const lastTwoSum = E + F;
+      const result3 = lastTwoSum - 6;
+      const result4 = lastTwoSum - 8;
+      createBoxOutput('secondFormulaBox', result3, result4);
+    }
+
+    function clearInputs() {
+      ['A', 'B', 'C', 'D', 'E', 'F'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('firstFormulaBox').innerHTML = '';
+      document.getElementById('secondFormulaBox').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
